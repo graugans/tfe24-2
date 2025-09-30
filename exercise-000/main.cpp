@@ -48,13 +48,16 @@ auto main(int argc, char **argv) -> int
     delete o;
 
     int firstvar = 57;
+    int y = 5;
     int *ptr = &firstvar;
+    int *po = &y;
 
     fmt::print("Wert meiner Ursprungsvariable: {}\n", firstvar);
 
     changeValueByParameter(firstvar);
-
     changeValueByPointer(ptr);
+    changeValueByParameter(y);
+    changeValueByPointer(po);
 
     return 0; /* exit gracefully*/
 }

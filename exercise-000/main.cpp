@@ -12,8 +12,19 @@ auto main(int argc, char **argv) -> int
      * More info at https://fmt.dev/latest/api.html
      */
     fmt::print("Hello, {}!\n", tfe24::PROJECT_NAME);
+ 
+    int x = 10;
+    int *p = &x;
+    fmt::print("Das ist die Addresse {}\n", fmt::ptr(&x));
+    fmt::print("Addresse von x: {}, Addresse von x: {} \n", x, fmt::ptr(&x));
+    *p = 42;
+    fmt::print("Addresse von x: {}, Addresse von x: {} \n", x, fmt::ptr(&x));
 
-    /* INSERT YOUR CODE HERE */
+    //Teil 2
+    double *z = new double(3.1415);
+    fmt::print("Addresse von z: {}, Addresse von z: {} \n", x, fmt::ptr(&z));
+    delete z;
+
 
     return 0; /* exit gracefully*/
 }

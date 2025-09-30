@@ -55,7 +55,7 @@ auto main(int argc, char **argv) -> int
     //Part 3
 
     //Functions are declared outside of the main function
-    int y = 123; // Declare an integer variable y and initialize it with the value 123
+    int y = 5; // Declare an integer variable y and initialize it with the value 5
     fmt::print("\nVor changeValueByParameter: y = {}\n", y); // Print the value of y before calling the function
     changeValueByParameter(y); // Call the function to change the value by parameter
     fmt::print("Nach changeValueByParameter: y = {}\n", y); // Print the value of y after calling the function (should remain unchanged)

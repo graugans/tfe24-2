@@ -1,8 +1,17 @@
+// Teil 1: Globale Variable (Data-Segment)
+int globalVar = 1;
+
+// Teil 4: Funktion (Code-Segment)
+void foo() { fmt::print("Hello from foo!\n"); }
+
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
+
+// Teil 1: Globale Variable (Data-Segment)
+int globalVar = 1;
 
 auto main(int argc, char **argv) -> int
 {
@@ -28,7 +37,33 @@ auto main(int argc, char **argv) -> int
      */
     fmt::print("Hello, {}!\n", app.get_name());
 
-    /* INSERT YOUR CODE HERE */
+
+    // Teil 1: Globale Variable (Data-Segment)
+    fmt::print("Teil 1: globalVar = {}, Adresse = {}\n", globalVar, fmt::ptr(&globalVar));
+
+    // Teil 2: Lokale Variable (Stack)
+    int localVar = 2;
+    fmt::print("Teil 2: localVar = {}, Adresse = {}\n", localVar, fmt::ptr(&localVar));
+
+    // Teil 3: Dynamisch allozierte Variable (Heap)
+    int* heapVar = new int(3);
+    fmt::print("Teil 3: *heapVar = {}, Adresse = {}\n", *heapVar, fmt::ptr(heapVar));
+    delete heapVar;
+
+    // Teil 4: Funktion (Code-Segment)
+    fmt::print("Teil 4: Adresse von foo = {}\n", fmt::ptr(reinterpret_cast<void*>(&foo)));
+    foo();
+
+    // Fazit
+    /*
+    Fazit:
+    - Globale Variablen werden im Data-Segment gespeichert und sind während der gesamten Programmlaufzeit verfügbar.
+    - Lokale Variablen liegen auf dem Stack und sind nur innerhalb ihres Gültigkeitsbereichs sichtbar.
+    - Dynamisch allozierte Variablen werden im Heap angelegt und müssen manuell freigegeben werden.
+    - Funktionen liegen im Code-Segment.
+    - Die Unterscheidung zwischen Stack und Heap ist wichtig für Speicherverwaltung und Lebensdauer von Variablen.
+    - Referenzen und Zeiger ermöglichen den Zugriff auf Speicheradressen und sind essenziell für dynamische Speicherverwaltung und effiziente Programmierung.
+    */
 
     return 0; /* exit gracefully*/
 }

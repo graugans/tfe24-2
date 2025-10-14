@@ -56,7 +56,7 @@ auto main(int argc, char **argv) -> int
 
     changeValueByParameter(firstvar);
     changeValueByPointer(ptr);
-    changeValueByParameter(y);
+    changeValueByParameter(y);  // Wert von y wird nicht geändert
     changeValueByPointer(po);
 
     return 0; /* exit gracefully*/

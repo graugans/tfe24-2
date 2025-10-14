@@ -28,7 +28,43 @@ auto main(int argc, char **argv) -> int
      */
     fmt::print("Hello, {}!\n", app.get_name());
 
-    /* INSERT YOUR CODE HERE */
+    // --- Point class definition ---
+    class Point {
+    public:
+        int x;
+        int y;
+
+        // default constructor
+        Point() : x(0), y(0) {}
+
+        // constructor with parameters
+        Point(int x_, int y_) : x(x_), y(y_) {}
+
+        // move the point
+        void move(int dx, int dy) { x += dx; y += dy; }
+
+        // print coordinates
+        void print() const { fmt::print("({}, {})\n", x, y); }
+
+        // distance to another point
+        double distance_to(const Point &other) const {
+            const double dx = static_cast<double>(x - other.x);
+            const double dy = static_cast<double>(y - other.y);
+            return std::sqrt(dx * dx + dy * dy);
+        }
+    };
+
+    // --- Example usage ---
+    Point p1(2, 3);
+    p1.print(); // (2, 3)
+
+    p1.move(1, -1);
+    p1.print(); // (3, 2)
+
+    Point p2;
+    p2.print(); // (0, 0)
+
+    fmt::print("Distance between p1 and p2: {}\n", p1.distance_to(p2));
 
     return 0; /* exit gracefully*/
 }

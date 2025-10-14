@@ -4,6 +4,17 @@
 #include "CLI/CLI.hpp"
 #include "config.h"
 
+
+// --- Teil 1: Globale Variable (Data-Segment) ---
+int globalVar = 1; // Globale Variable
+
+// --- Teil 4: Funktion (Code-Segment) ---
+void foo() {
+    fmt::print("Hello from foo!\n");
+}
+
+
+
 auto main(int argc, char **argv) -> int
 {
     /**
@@ -29,6 +40,35 @@ auto main(int argc, char **argv) -> int
     fmt::print("Hello, {}!\n", app.get_name());
 
     /* INSERT YOUR CODE HERE */
+
+
+
+    fmt::print("--- Speichersegmente in C++ ---\n\n");
+
+    // --- Teil 1: Data-Segment ---
+    fmt::print("[Data-Segment] globalVar = {}, Adresse = {}\n", globalVar, fmt::ptr(&globalVar));
+
+    // --- Teil 2: Stack ---
+    int localVar = 2;
+    fmt::print("[Stack]        localVar = {}, Adresse = {}\n", localVar, fmt::ptr(&localVar));
+
+    // --- Teil 3: Heap ---
+    int* heapVar = new int(3);
+    fmt::print("[Heap]         *heapVar = {}, Adresse von heapVar (Zeiger selbst) = {}\n", *heapVar, fmt::ptr(heapVar));
+    delete heapVar; // Speicher wieder freigeben
+
+    // --- Teil 4: Code-Segment ---
+    fmt::print("[Code]         Adresse von foo = {}\n\n", fmt::ptr(&foo));
+
+    // --- Zusatz: Fazit ---
+    fmt::print("--- Fazit ---\n");
+    fmt::print("Globale Variablen liegen im Data-Segment.\n");
+    fmt::print("Lokale Variablen liegen auf dem Stack.\n");
+    fmt::print("Dynamisch erzeugte Variablen liegen im Heap und müssen mit delete freigegeben werden.\n");
+    fmt::print("Funktionen (Code) liegen im Code-Segment.\n\n");
+    fmt::print("Referenzen verweisen direkt auf Speicherstellen (wie Aliasse).\n");
+    fmt::print("Zeiger speichern Adressen und ermöglichen Zugriff auf Stack-, Heap- oder globale Daten.\n");
+    fmt::print("Wichtig: Heap-Variablen bleiben bestehen, bis sie gelöscht werden – Stack-Variablen verschwinden am Ende ihrer Gültigkeit.\n");
 
     return 0; /* exit gracefully*/
 }

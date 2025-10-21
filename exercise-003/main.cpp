@@ -1,5 +1,7 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <vector>
+#include <random>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
@@ -33,7 +35,7 @@ auto main(int argc, char **argv) -> int
      * More info at https://fmt.dev/latest/api.html
      */
 
-    
+
     fmt::print("Hello, {}!\n", app.get_name());
     fmt::print("Parameter count: {}\n", count);
 

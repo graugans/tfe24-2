@@ -1,9 +1,12 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 #include <iostream>
+#include <vector>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
+
+
 
 auto main(int argc, char **argv) -> int
 {
@@ -34,6 +37,12 @@ auto main(int argc, char **argv) -> int
     app.add_option("-c,--count",count, "Anzahl der Elemente (Standard: 20)");
 
     std::cout<<"Zähle:"<<count<<std::endl;
+
+    std::vector<int>numbers(count); 
+    for(int i=0; i<count; ++i){
+        numbers[i]=i+1;
+    }
+
 
 
     return 0; /* exit gracefully*/

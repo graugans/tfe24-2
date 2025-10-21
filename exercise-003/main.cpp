@@ -1,5 +1,6 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <iostream>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
@@ -29,6 +30,11 @@ auto main(int argc, char **argv) -> int
     fmt::print("Hello, {}!\n", app.get_name());
 
     /* INSERT YOUR CODE HERE */
+    int count =20;
+    app.add_option("-c,--count",count, "Anzahl der Elemente (Standard: 20)");
+
+    std::cout<<"Zähle:"<<count<<std::endl;
+
 
     return 0; /* exit gracefully*/
 }

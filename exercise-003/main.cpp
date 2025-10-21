@@ -1,12 +1,16 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <fmt/ranges.h>
 #include <iostream>
 #include <vector>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
 
+void print_vector(const std::vector<int>& vec, const std::string& label) {
+    fmt::print("{}: {}\n", label, vec);
 
+}
 
 auto main(int argc, char **argv) -> int
 {
@@ -33,7 +37,7 @@ auto main(int argc, char **argv) -> int
     fmt::print("Hello, {}!\n", app.get_name());
 
     /* INSERT YOUR CODE HERE */
-    int count =20;
+    int count =17;
     app.add_option("-c,--count",count, "Anzahl der Elemente (Standard: 20)");
 
     std::cout<<"Zähle:"<<count<<std::endl;
@@ -43,7 +47,7 @@ auto main(int argc, char **argv) -> int
         numbers[i]=i+1;
     }
 
-
+    print_vector(numbers, "Vector Caption");
 
     return 0; /* exit gracefully*/
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <random>
 #include <algorithm>  // For std::sort
+#include <chrono>     // For timing
 
 #include "CLI/CLI.hpp"
 #include "config.h"
@@ -53,12 +54,20 @@ auto main(int argc, char **argv) -> int
     fmt::print("Unsorted ");
     print_vector(random_values);
 
-    // Sort the vector in ascending order
+    // Measure sorting time
+    auto start = std::chrono::system_clock::now();
     std::sort(random_values.begin(), random_values.end());
+    auto end = std::chrono::system_clock::now();
+
+    // Calculate elapsed time in milliseconds
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     // Output the sorted vector
     fmt::print("Sorted ");
     print_vector(random_values);
+
+    // Output the elapsed time for sorting
+    fmt::print("Sorting took {} milliseconds\n", elapsed.count());
 
     return 0;
 }

@@ -2,13 +2,14 @@
 #include <fmt/format.h>
 #include <vector>
 #include <random>
+#include <algorithm>  // For std::sort
 
 #include "CLI/CLI.hpp"
 #include "config.h"
 
 // Function to print all elements in a vector<int> using {fmt}
 void print_vector(const std::vector<int> &vec) {
-    fmt::print("Random values: ");
+    fmt::print("Values: ");
     for (const auto &val : vec) {
         fmt::print("{} ", val);
     }
@@ -48,7 +49,15 @@ auto main(int argc, char **argv) -> int
         val = dis(gen);
     }
 
-    // Output the random values using the print_vector function
+    // Output the random values before sorting
+    fmt::print("Unsorted ");
+    print_vector(random_values);
+
+    // Sort the vector in ascending order
+    std::sort(random_values.begin(), random_values.end());
+
+    // Output the sorted vector
+    fmt::print("Sorted ");
     print_vector(random_values);
 
     return 0;

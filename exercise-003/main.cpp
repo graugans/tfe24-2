@@ -8,6 +8,18 @@
 #include "CLI/CLI.hpp"
 #include "config.h"
 
+std::vector<int> generate_random_vector(std::size_t count){
+    std::vector<int> numbers(count);
+    std::random_device rd;   // liefert "echte" Zufallsquelle
+    std::mt19937 gen(rd());  // Mersenne Twister Generator
+    std::uniform_int_distribution<> dist(1, 100); // Zahlenbereich 1–100
+
+    std::generate(numbers.begin(), numbers.end(), [&]() { return dist(gen); });
+    return numbers;
+}
+
+
+
 void print_vector(const std::vector<int>& vec, const std::string& label) {
     fmt::print("{}: {}\n", label, vec);
 
@@ -43,17 +55,13 @@ auto main(int argc, char **argv) -> int
 
     std::cout<<"Zähle:"<<count<<std::endl;
 
-std::vector<int> numbers(count);
-
-std::random_device rd;   // liefert "echte" Zufallsquelle
-std::mt19937 gen(rd());  // Mersenne Twister Generator
-std::uniform_int_distribution<> dist(1, 100); // Zahlenbereich 1–100
-
-for (auto& n : numbers) {
-    n = dist(gen);
-}
+    auto numbers = generate_random_vector(count);
 
     print_vector(numbers, "Vector Caption");
+
+    std::sort(numbers.begin(), numbers.end());
+
+    print_vector(numbers, "Sortiert");
 
     return 0; /* exit gracefully*/
 }

@@ -32,9 +32,30 @@ auto main(int argc, char **argv) -> int
      * it is much more convenient than std::cout and printf
      * More info at https://fmt.dev/latest/api.html
      */
-    fmt::print("Hello, {}!\n", app.get_name());
 
-    /* INSERT YOUR CODE HERE */
+    
+    fmt::print("Hello, {}!\n", app.get_name());
+    fmt::print("Parameter count: {}\n", count);
+
+    // Initialize random number generation machinery
+    std::random_device rd;  // Seed source
+    std::mt19937 gen(rd()); // Mersenne Twister PRNG
+    std::uniform_int_distribution<> dis(1, 100); // Uniform dist 1-100
+
+    // Create vector with size `count`
+    std::vector<int> random_values(count);
+
+    // Fill vector with random ints in range 1-100
+    for(auto &val : random_values) {
+        val = dis(gen);
+    }
+
+    // Optional: output the random values (comment out if undesired)
+    fmt::print("Random values: ");
+    for(const auto &val : random_values){
+        fmt::print("{} ", val);
+    }
+    fmt::print("\n");
 
     return 0; /* exit gracefully*/
 }

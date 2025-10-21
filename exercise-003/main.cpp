@@ -11,6 +11,12 @@ auto main(int argc, char **argv) -> int
      * More info at https://github.com/CLIUtils/CLI11#usage
      */
     CLI::App app{PROJECT_NAME};
+
+    // Define an integer variable for the count parameter, default to 20
+    int count = 20;
+    // Add the --count / -c option for the count parameter with description and default value
+    app.add_option("-c,--count", count, "Count parameter, default 20")->default_val("20");
+
     try
     {
         app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));

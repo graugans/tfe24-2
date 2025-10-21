@@ -6,17 +6,20 @@
 #include "CLI/CLI.hpp"
 #include "config.h"
 
+// Function to print all elements in a vector<int> using {fmt}
+void print_vector(const std::vector<int> &vec) {
+    fmt::print("Random values: ");
+    for (const auto &val : vec) {
+        fmt::print("{} ", val);
+    }
+    fmt::print("\n");
+}
+
 auto main(int argc, char **argv) -> int
 {
-    /**
-     * CLI11 is a command line parser to add command line options
-     * More info at https://github.com/CLIUtils/CLI11#usage
-     */
     CLI::App app{PROJECT_NAME};
 
-    // Define an integer variable for the count parameter, default to 20
     int count = 20;
-    // Add the --count / -c option for the count parameter with description and default value
     app.add_option("-c,--count", count, "Count parameter, default 20")->default_val("20");
 
     try
@@ -28,13 +31,6 @@ auto main(int argc, char **argv) -> int
     {
         return app.exit(e);
     }
-
-    /**
-     * The {fmt} lib is a cross platform library for printing and formatting text
-     * it is much more convenient than std::cout and printf
-     * More info at https://fmt.dev/latest/api.html
-     */
-
 
     fmt::print("Hello, {}!\n", app.get_name());
     fmt::print("Parameter count: {}\n", count);
@@ -52,12 +48,8 @@ auto main(int argc, char **argv) -> int
         val = dis(gen);
     }
 
-    // Optional: output the random values (comment out if undesired)
-    fmt::print("Random values: ");
-    for(const auto &val : random_values){
-        fmt::print("{} ", val);
-    }
-    fmt::print("\n");
+    // Output the random values using the print_vector function
+    print_vector(random_values);
 
-    return 0; /* exit gracefully*/
+    return 0;
 }

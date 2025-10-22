@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <chrono>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
@@ -50,7 +51,7 @@ auto main(int argc, char **argv) -> int
     fmt::print("Hello, {}!\n", app.get_name());
 
     /* INSERT YOUR CODE HERE */
-    int count =17;
+    int count =57;
     app.add_option("-c,--count",count, "Anzahl der Elemente (Standard: 20)");
 
     std::cout<<"Zähle:"<<count<<std::endl;
@@ -58,10 +59,18 @@ auto main(int argc, char **argv) -> int
     auto numbers = generate_random_vector(count);
 
     print_vector(numbers, "Vector Caption");
+    auto start = std::chrono::system_clock::now();
 
+    /* do some work */
     std::sort(numbers.begin(), numbers.end());
+    auto end = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+
+
 
     print_vector(numbers, "Sortiert");
+
+    fmt::print("Sortierzeit: {} us\n", elapsed.count());
 
     return 0; /* exit gracefully*/
 }

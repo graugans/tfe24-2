@@ -1,10 +1,11 @@
 // 001-TestCase.cpp
-// And write tests in the same file:
 #include <catch2/catch_test_macros.hpp>
+
+// For approximate floating-point comparisons
 #include <catch2/catch_approx.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
-#include <algorithm>
+// Include the Point class header
 #include "point/point.hpp"
 
 TEST_CASE("Point: Konstruktoren") {
@@ -30,6 +31,10 @@ TEST_CASE("Point: move verschiebt relativ") {
 TEST_CASE("Point: distance_to – euklidisch & robust") {
     Point a{0, 0};
     Point b{3, 4};
+
+    // Zum Vergleich von Gleitkommazahlen
+    // https://github.com/catchorg/Catch2/blob/devel/docs/comparing-floating-point-numbers.md#comparing-floating-point-numbers-with-catch2
+
     // See: https://github.com/catchorg/Catch2/blob/devel/docs/comparing-floating-point-numbers.md#approx
     REQUIRE( a.distance_to(b) == Catch::Approx(5.0).margin(1e-12) );
     REQUIRE( b.distance_to(a) == Catch::Approx(5.0).margin(1e-12) );

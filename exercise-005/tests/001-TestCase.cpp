@@ -1,16 +1,61 @@
 // 001-TestCase.cpp
 // And write tests in the same file:
 #include <catch2/catch_test_macros.hpp>
-
+#include <algorithm>
 static auto factorial(int number) -> int
 {
     // return number <= 1 ? number : Factorial( number - 1 ) * number;  // fail
     return number <= 1 ? 1 : factorial(number - 1) * number;  // pass
 }
 
+class Triangle
+{
+   public:
+    Triangle(double a, double b, double c) : sideA(a), sideB(b), sideC(c) {}
+    auto isRectangular() const -> bool
+    {
+        double sides[3] = {sideA, sideB, sideC};
+        std::sort(sides, sides + 3);
+        return (sides[0] * sides[0] + sides[1] * sides[1]) == (sides[2] * sides[2]);
+    }
+
+   private:
+    double sideA;
+    double sideB;
+    double sideC;
+};
+
+class TriangleFixture
+{
+   protected:
+    Triangle t1{3.0, 4.0, 5.0};
+    Triangle t2{2.0, 2.0, 3.0};
+    void setup()
+    {
+        // Vorbereitung (z. B. Ressourcen initialisieren)
+    }
+    void teardown()
+    {
+        // Aufräumarbeiten (z. B. Dateien schließen)
+    }
+};
+TEST_CASE_METHOD(TriangleFixture, "Prüfung auf rechtwinkliges Dreieck", "[triangle]")
+{
+    setup();
+    REQUIRE(t1.isRectangular());
+    teardown();
+}
+
+TEST_CASE_METHOD(TriangleFixture, "Prüfung auf ungleichseitiges Dreieck", "[triangle]") 
+{
+setup();
+REQUIRE_FALSE(t2.isRectangular());
+teardown();
+}
+
 TEST_CASE("Factorial of 0 is 1 (fail)", "[single-file]")
 {
-    REQUIRE(factorial(0) == 0);
+    REQUIRE(factorial(0) == 1);
 }
 
 TEST_CASE("Factorials of 1 and higher are computed (pass)", "[single-file]")

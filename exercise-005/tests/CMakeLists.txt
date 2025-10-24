@@ -7,13 +7,12 @@ message( STATUS "Catch2 Tests included" )
 add_executable( ${PROJECT_NAME}-tests
   000-Main.cpp
   001-TestCase.cpp
-  ../point.cpp
 )
 
 # Add libraries
 target_link_libraries(${PROJECT_NAME}-tests PRIVATE
                                         fmt::fmt
-                                        nlohmann_json::nlohmann_json
+                                        point
                                         Catch2::Catch2WithMain)
 
 add_catch2_test(

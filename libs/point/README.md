@@ -2,12 +2,15 @@
 
 Kurz: Kleine C++-Bibliothek, die eine Point-Klasse (x,y) mit Basisoperationen bereitstellt.
 
-Voraussetzungen
+## Voraussetzungen
+
 - CMake >= 3.10.2
 - fmt (wird per find_package in der CMakeLists erwartet)
 
 Einbinden in ein größeres CMake-Projekt
+
 1. Stelle sicher, dass das `point`-Subprojekt vor den Konsumenten-Subprojekten hinzugefügt wird:
+
 ```cmake
 add_subdirectory(libs/point)
 # danach z.B.
@@ -15,13 +18,16 @@ add_subdirectory(exercise-005)
 ```
 
 2. In der CMakeLists des Konsumenten:
+
 ```cmake
 add_executable(myapp src/main.cpp)
 target_link_libraries(myapp PRIVATE point)
 ```
+
 Das Library-Target heißt `point` und exportiert die Include-Pfade (Header liegen in `libs/point/include`, z.B. `point/point.hpp`).
 
-Beispiel: Benutzung in C++
+## Beispiel: Benutzung in C++
+
 ```cpp
 #include "point/point.hpp"
 #include <iostream>
@@ -36,7 +42,8 @@ int main() {
 }
 ```
 
-Build (aus dem Workspace-Root)
+## Build (aus dem Workspace-Root)
+
 ```bash
 cmake -S . -B build
 cmake --build build
@@ -44,10 +51,12 @@ cmake --build build
 cmake --build build --target exercise-005
 ```
 
-Hinweise
+## Hinweise
+
 - Header-Pfad: `#include "point/point.hpp"`.
 - Die Bibliothek verwendet `fmt` für Log-Ausgaben; die Abhängigkeit wird in der CMakeLists von `point` erwartet.
 - Falls die Bibliothek außerhalb des Build-Trees genutzt werden soll, ergänze `install()` und `export()` in der CMake-Konfiguration.
 
-Kontakt / Troubleshooting
+## Troubleshooting
+
 - Bei "file not found" für `point.hpp` prüfen: wurde `add_subdirectory(libs/point)` im Top-Level-CMake vor dem Consumer aufgerufen und verbindet der Consumer das Target (`target_link_libraries(... PRIVATE point)`)?

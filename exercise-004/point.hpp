@@ -1,6 +1,8 @@
+// Include-Guard: Beim ersten Einbinden dieser Datei ist POINT_HPP noch nicht definiert
+// Dadurch wird sichergestellt, dass der Inhalt dieser Datei nur einmal eingebunden wird
 #ifndef POINT_HPP
 #define POINT_HPP
-
+// Definition der Klasse Point
 class Point {
 
     public:

@@ -1,20 +1,15 @@
-cmake_minimum_required (VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.10)
+project(exercise_006_tests)
 
-message( STATUS "Catch2 Tests included" )
+find_package(Catch2 3 REQUIRED)
+find_package(fmt REQUIRED)
 
-# Some one-offs first:
-# 1) Tests and main in one file
-add_executable( ${PROJECT_NAME}-tests
-  000-Main.cpp
-  001-TestCase.cpp
-)
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../include")
 
-# Add libraries
-target_link_libraries(${PROJECT_NAME}-tests PRIVATE
-                                        fmt::fmt
-                                        nlohmann_json::nlohmann_json
-                                        Catch2::Catch2WithMain)
+add_executable(test_point_template test_point_template_cpp17.cpp)
 
-add_catch2_test(
-  TARGET ${PROJECT_NAME}-tests
-)
+target_link_libraries(test_point_template PRIVATE Catch2::Catch2WithMain fmt::fmt)
+
+include(CTest)
+include(Catch)
+catch_discover_tests(test_point_template)

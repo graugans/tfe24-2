@@ -1,41 +1,38 @@
-/*#ifndef POINT_HPP
-#define POINT_HPP
-
-class Point {
-
-    public:
-    Point();
-    Point(double x, double y);
-    ~Point(); 
-    private:
-    double
-    double
-};
-
-#endif //*/
-
 #ifndef POINT_HPP
 #define POINT_HPP
 
 #include <fmt/core.h>
 
-class Point {
-private:
+// --- Task: Implement the Point class ---
+class Point
+{
+public:
     int x;
     int y;
 
-public:
-    // Standardkonstruktor
-    Point();
+    // Default constructor
+    Point() : x(0), y(0) {}
 
-    // Konstruktor mit Parametern
-    Point(int xVal, int yVal);
+    // Constructor with initialization
+    Point(int x_, int y_) : x(x_), y(y_) {}
 
-    // Verschiebt den Punkt
-    void move(int dx, int dy);
+    void move(int dx, int dy)
+    {
+        x += dx;
+        y += dy;
+    }
 
-    // Gibt die Koordinaten aus
-    void print() const;
+    void print() const
+    {
+        fmt::print("({0}, {1})\n", x, y);
+    }
+
+    double distance_to(const Point &other) const
+    {
+        double dx = static_cast<double>(x - other.x);
+        double dy = static_cast<double>(y - other.y);
+        return std::sqrt(dx * dx + dy * dy);
+    }
 };
 
 #endif

@@ -8,9 +8,9 @@ static auto factorial(int number) -> int
     return number <= 1 ? 1 : factorial(number - 1) * number;  // pass
 }
 
-TEST_CASE("Factorial of 0 is 1 (fail)", "[single-file]")
+TEST_CASE("Factorial of 0 is 1", "[single-file]")
 {
-    REQUIRE(factorial(0) == 0);
+    REQUIRE(factorial(0) == 1);
 }
 
 TEST_CASE("Factorials of 1 and higher are computed (pass)", "[single-file]")

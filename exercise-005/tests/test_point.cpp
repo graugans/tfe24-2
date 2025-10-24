@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include "point.hpp"
 
 TEST_CASE("Point: Constructors", "[point]") {
@@ -30,9 +31,9 @@ TEST_CASE("Point: move works with positive and negative offsets", "[point]") {
 TEST_CASE("Point: distance_to correctness and properties", "[point]") {
     Point a{0, 0};
     Point b{3, 4};
-    REQUIRE( a.distance_to(b) == Approx(5.0).margin(1e-12) );
-    REQUIRE( b.distance_to(a) == Approx(5.0).margin(1e-12) );
-    REQUIRE( a.distance_to(a) == Approx(0.0).margin(1e-12) );
+    REQUIRE( a.distance_to(b) == Catch::Approx(5.0).margin(1e-12) );
+    REQUIRE( b.distance_to(a) == Catch::Approx(5.0).margin(1e-12) );
+    REQUIRE( a.distance_to(a) == Catch::Approx(0.0).margin(1e-12) );
 
     SECTION("Symmetry") {
         REQUIRE(a.distance_to(b) == b.distance_to(a));

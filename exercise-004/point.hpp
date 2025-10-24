@@ -16,8 +16,6 @@ class Point {
     private:
         double m_x;
         double m_y;
-
-
 };
 
 #endif // POINT_HPP

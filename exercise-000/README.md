@@ -1,84 +1,14 @@
-# Übungsaufgabe: Zeiger in C++ mit `fmt`
+## Übungsaufgabe Zeiger in C++ (exercise-000)
 
-## Details
-
-Datum: 30.09.2025
-Link zu [Rapla](https://rapla-ravensburg.dhbw.de/rapla?page=calendar&user=Regulski&file=TFE24-2&day=23&month=9&year=2025&next=%3E%3E)
-
-## Notwendige git Kommandos
-
-```sh
-git status
-git branch -a
-git switch main
-# create a new local branch based on the origin main
-git switch -c solution-000 origin/main
-# perform changes
-git add exercise-000
-git commit -m "feat: add exercise number two"
-# push the changes to the cloud
-git push -u origin solution-000
-....
-```
-
-
-**Lernziel:** Wiederholung und Festigung des Verständnisses von Zeigern in C++ sowie Einführung in die Verwendung der [`fmt`](https://fmt.dev/)-Bibliothek zur Ausgabe.
-
----
-
-## Teil 1: Zeiger-Grundlagen
-
-1. Legen Sie eine `int`-Variable `x` mit dem Wert `10` an.
-2. Deklarieren Sie einen Zeiger `p`, der auf `x` zeigt.
-3. Geben Sie mit `fmt::print` den Wert von `x` und die Adresse von `x` aus.  
-   → Tipp: Mit `fmt::ptr(&x)` können Sie eine Adresse im Pointer-Format ausgeben.
-4. Geben Sie den Wert aus, auf den der Zeiger `p` zeigt, sowie die Adresse, die in `p` gespeichert ist.
-5. Ändern Sie den Wert von `x` über den Zeiger `p` auf `42`.
-6. Geben Sie erneut den Wert von `x` und den Wert aus, auf den `p` zeigt.
-
----
-
-## Teil 2: Dynamische Speicherverwaltung
-
-1. Deklarieren Sie einen Zeiger auf `double`.
-2. Reservieren Sie mit `new` Speicher für genau einen `double`-Wert und initialisieren Sie ihn mit `3.1415`.
-3. Geben Sie Wert und Adresse mit `fmt::print` aus.
-4. Geben Sie den Speicher anschließend wieder mit `delete` frei.
-
-> **Merke:** Jeder mit `new` reservierte Speicher muss mit `delete` wieder freigegeben werden, sonst entsteht ein **Memory Leak**.
-
-### Beispiel (Ausschnitt)
-
-```cpp
-double* d = new double(3.1415);   // Speicher im Heap reservieren
-fmt::print("Wert: {}\n", *d);     // Zugriff über Dereferenzierung
-fmt::print("Adresse: {}\n", fmt::ptr(d));
-
-delete d;                         // Speicher wieder freigeben
-```
-
----
-
-## Teil 3: Funktionen mit Zeigern
-
-Definieren Sie zwei Funktionen:
-
-1. `void changeValueByParameter(int value)`  
-   - Nimmt eine `int`-Variable als **Parameter** entgegen.  
-   - Ändert den Wert innerhalb der Funktion (z. B. `value = 99;`).  
-   - Geben Sie innerhalb der Funktion den neuen Wert aus.  
-   - Beobachten Sie, ob sich die ursprüngliche Variable im Hauptprogramm verändert.
-
-2. `void changeValueByPointer(int* ptr)`  
-   - Nimmt einen Zeiger auf `int` als Parameter entgegen.  
-   - Ändert den Wert, auf den der Zeiger zeigt (z. B. `*ptr = 77;`).  
-   - Geben Sie innerhalb der Funktion den neuen Wert aus.  
-   - Beobachten Sie die Auswirkungen auf die ursprüngliche Variable.
+### Vorwort
+Ich habe die Aufgabe nach bestem Wissen und gewissen ausgeführt. Da ich lieber auf meinem eigenen Computer arbeite, als im Codespace (aufgrund des Editors), habe ich statt `fmt::println()` `fmt::print()` benutzt. Das liegt daran, dass es anders Problemenicht richtig läuft und es ja im Endeffekt keinen großen Unterschied macht. 
 
 ### Aufgabe
+#### Teil 1: Zeiger Grundlagen
+Die Beschreibung nimmt hier den Programmablauf quasi schon vorweg.
 
-1. Deklarieren Sie eine `int`-Variable `y = 5;`.
-2. Rufen Sie `changeValueByParameter(y);` auf und geben Sie **vor und nach dem Funktionsaufruf** den Wert von `y` aus.
-3. Rufen Sie `changeValueByPointer(&y);` auf und geben Sie **vor und nach dem Funktionsaufruf** den Wert von `y` aus.
+#### Teil 2: Dynamische Speicherverwaltung
+Die Pointer-Variable `d` wird als double pointer initialisiert. Dabei wird sie ebenfalls definiert, indem ihr durch `new` inklusive der double-"Funktion" der Pointer auf einen double im heap vom Wert `3.1415` zugewiesen wird.
 
-> **Hinweis:** So erkennen Sie den Unterschied zwischen Übergabe einer Variable als Parameter (keine Änderung der Originalvariable) und Übergabe eines Zeigers (die Originalvariable wird verändert).
+#### Teil 3: Funktionen mit Zeigern
+Der Unterschied der beiden Funktionen liegt darin, dass bei `void changeValueByParameter(int value)` die Variable als Parameter und bei `void changeValueByPointer(int* ptr)` die Variable als Pointer, bzw. ihre Adresse übergeben wird. Neben syntaktischer Unterschiede innerhalb der Funktion, ist es wichtig zu beachten, dass bei der Parameterübergabe eine Kopie der Variable erstellt wird. Das führt dazu, dass eine Änderung der Übergabevariable innerhalb der Funktion, keinen Einfluss auf die orginale Funktion hat. Bei der Übergabe als Pointer (oder Adresse) wird die Adresse oder der Pointer zwar ebenfalls kopiert, allerdings verändert sich bei der Änderung des Inhalts der Adresse natürlich auch der Inhalt der ursprünglichen Variable, der ja hinter dieser Adresse steht (Im übertragende Sinne). 

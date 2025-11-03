@@ -7,15 +7,15 @@
 #include <algorithm> /* needed for the std::sort */
 #include <random>
 
+int DEFAULT_VECTOR_LENGTH = 20;
+
 
 int main(int argc, char** argv) 
 {
     CLI::App app{"app, that can take a positive even integer as an inline input"};
     argv = app.ensure_utf8(argv);
-
-    std::string filename = "default";
-    app.add_option("-f,--file", filename, "A help string");
-
+    int vector_length = DEFAULT_VECTOR_LENGTH;
+    app.add_option("-c,--count", vector_length, "Absolute quantity of numbers in the vector");
     try 
     {
     app.parse(argc, argv);
@@ -24,6 +24,9 @@ int main(int argc, char** argv)
     {
     return app.exit(e);
     }
+    fmt::print("vector length: {}\n", vector_length);
+
+
     return 0;
 }
 

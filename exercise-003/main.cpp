@@ -9,6 +9,17 @@
 
 int DEFAULT_VECTOR_LENGTH = 20;
 
+// Teil 3 der Aufgabe
+void print_vector(std::vector<int> vector)
+{
+    fmt::print("Vektor: ");
+    int vec_len = vector.size();
+    for (int i = 0; i < vec_len; i++) 
+    {
+        fmt::print("{}, ", vector[i]);
+    }
+    fmt::print("\n");
+}
 
 int main(int argc, char** argv) 
 {
@@ -39,6 +50,7 @@ int main(int argc, char** argv)
         int random_number = dis(generator);
         random_vec.push_back(random_number);
     } 
+    print_vector(random_vec);
     return 0;
 }
 

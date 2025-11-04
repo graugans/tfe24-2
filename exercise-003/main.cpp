@@ -50,6 +50,12 @@ int main(int argc, char** argv)
         int random_number = dis(generator);
         random_vec.push_back(random_number);
     } 
+    fmt::print("Vor der Sortierung\n");
+    print_vector(random_vec);
+
+    // Teil 4 der Aufgabe
+    std::sort(random_vec.begin(), random_vec.end());
+    fmt::print("Nach der Sortierung\n");
     print_vector(random_vec);
     return 0;
 }

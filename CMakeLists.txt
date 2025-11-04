@@ -59,6 +59,7 @@ include(cmake/StaticAnalyzers.cmake)
 # enable doxygen
 include(cmake/Doxygen.cmake)
 
+add_subdirectory(libs)
 # Exercises & solutions
 add_subdirectory(exercise-000)
 add_subdirectory(exercise-001)

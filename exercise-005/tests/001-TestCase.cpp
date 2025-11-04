@@ -10,19 +10,19 @@
 
 TEST_CASE("Point: Konstruktoren") {
     SECTION("Init mit Werten") {
-        Point p{2, 3};
+        Point<double> p{2, 3};
         REQUIRE(p.getX() == 2);
         REQUIRE(p.getY() == 3);
     }
     SECTION("Default-Konstruktor") {
-        Point p;
+        Point<double> p;
         REQUIRE(p.getX() == 0);
         REQUIRE(p.getY() == 0);
     }
 }
 
 TEST_CASE("Point: move verschiebt relativ") {
-    Point p{1, 1};
+    Point<double> p{1, 1};
     p.move(2, -3);
     REQUIRE(p.getX() == 3);
     REQUIRE(p.getY() == -2);

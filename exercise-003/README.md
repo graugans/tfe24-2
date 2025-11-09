@@ -1,53 +1,23 @@
-# Aufgabenstellung
+## Parameterraum / Teil 1
+Da ich die Aufgabe nach dem vorgesehenen Abgabezeitraum bearbeite habe ich die "Vorlage" nicht angepasst, sondern "neu geschrieben". Das bedeutet in dem Fall, dass ich die Vorlage von https://github.com/CLIUtils/CLI11#usage kopiert und für meinen Fall angepasst habe. Die Änderungen sind nicht wirklich komplex, die Funktion der Variablen und Methoden geht aus dem Programmcode hervor.
 
-## Details
-
-Datum: 21.10.2025
-Link zu [Rapla](https://rapla-ravensburg.dhbw.de/rapla?page=calendar&user=Regulski&file=TFE24-2&day=14&month=10&year=2025&next=%3E%3E)
-
-## Notwendige git Kommandos
-
-```sh
-git status
-git branch -a
-git switch main
-# create a new local branch based on the origin main
-git switch -c solution-003 origin/main
-# perform changes
-# ....
-git add exercise-003
-git commit -m "feat: add exercise number two"
-# push the changes to the cloud
-git push -u origin solution-003
-....
-```
-
-
-## Parameterraum
-
-Ändern Sie die Vorlage so ab, dass Sie einen Parameter ``count`` mittels Kommandozeile ``-c,--count`` übergeben können. Falls kein Parameter angegeben wird, so ist der Standardwert mit 20 festzusetzen.
-
-Erstellen Sie anschließend einen Commit und pushen diesen.
-
-## Den Zufall einordnen
-
+## Den Zufall einordnen / Teil 2
 Erstellen Sie einen ``std::vector`` mit der Größe von ``count`` und füllen diesen mit zufälligen Werten von 1-100.
 
-Erstellen Sie anschließend einen Commit und pushen diesen.
+Dafür wird als erstes der vector (``random_vec``) erstellt. Anschließend wird ein zufälliger Seed generiert. Dieser wird anschließend dem ``generator`` gefüttert. Die Codezeile ``std::uniform_int_distribution dis(1, 100);`` führt später dazu, dass die vom Generator zufällig generierten Bits am Ende gleich auf Zahlenwerte von 1 - 100 verteilt werden. Anders als in Python ist das hier also ein mehrstufiger Prozess. Um die richtige Anzahl von Werten anschließend in den Vektor zu "pushen" wird die anschließende for-Schleife benötigt.
 
-## Zeig es mir Baby
+## Zeig es mir Baby / Teil 3
+Damit Sie den Zufall kennen, müssen Sie ihn ausgeben können. Verwenden Sie hierzu die ``{fmt}`` Bibliothek und erstellen Sie eine Funktion, um den Vektor auszugeben.
 
-Damit Sie den Zufall kenne, müssen Sie ihn ausgeben können. Verwenden Sie hierzu die ``{fmt}`` Bibliothek und erstellen Sie eine Funktion, um den Vektor auszugeben.
+Die Funktion unter ``// Teil 3 der Aufgabe`` erfüllt den Zweck auf einfache Weise. Die Methode ``vector.size()`` macht es sehr einfach von Beginn, zum Ende des Vektors zu iterieren und dabei jeden Inhalt Auszugeben.
 
-Erstellen Sie anschließend einen Commit und pushen diesen.
-
-## Der Zufall in geordneten Bahnen
+## Der Zufall in geordneten Bahnen / Teil 4
 
 Sortieren Sie nun den Vector der Reihe nach. Das heißt die niedrigste Zahl zuerst. Das Ergebnis soll ebenfalls ausgegeben werden.
 
-Erstellen Sie anschließend einen Commit und pushen diesen.
+Die Funktion ``std::sort()`` sortiert den Vektor. Sofern man als Parameter ``VECTOR.begin(), VECTOR.end()`` eingibt, geschieht das in aufsteigender Reihenfolge, wie in mein Beispiel veranschaulicht.
 
-## Strava für Vektoren
+## Strava für Vektoren / Teil 5
 
 Damit Sie sich mit Ihren Kollegen messen können, interessiert Sie nur eine Sache. Geschwindigkeit. Wie schnell wurde der Vektor sortiert. Dazu nutzen Sie die Funktionen der Bibliothek ``std::chrono``
 
@@ -70,23 +40,15 @@ auto elapsed =
 
 Sie haben es erfasst, die Ergebnisse sind wieder mit ``{fmt}`` auszugeben.
 
-Erstellen Sie anschließend einen Commit und pushen diesen in Ihr ``origin``
+Die gegebenen Codeschnippsel wurden in den source-code integriert und funktionieren.
 
 ## Nach getaner Arbeit
 
 Haben Sie alle Punkte erfolgreich abgearbeitet, erstellen Sie einen Merge-Request in Ihrem Fork und fügen mich ``graugans`` als Approval hinzu.
 
-## Lernziele
-
-- Vertiefung der git Kenntnisse
-- Erste Schritte mit CMake
-- Umgang mit Vektoren
-- Umgang mit der CLI11
-- Umgang mit der ``{fmt}`` Bibliothek
-- Anwenden der [Algorithms library](https://en.cppreference.com/w/cpp/algorithm)
-- Zeitmessung mit ``std::chrono``
-
 ## Anmerkungen
 
 - Verwenden Sie, falls möglich range based for loops siehe auch [es71](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#es71-prefer-a-range-for-statement-to-a-for-statement-when-there-is-a-choice) aus den Cpp Core Guidelines
 - Achten Sie darauf, bei Parametern möglichst immer das Schlüsselwort ``const`` zu verwenden.
+
+Diese Anmerkungen habe ich leider erst nach geschriebenem Code gesichtet, weswegen ich bestimmte Vorgaben möglicherweise nicht befolgt habe. 

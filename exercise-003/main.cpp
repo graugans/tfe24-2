@@ -7,6 +7,8 @@
 #include <algorithm> /* needed for the std::sort */
 #include <random>
 
+
+
 int DEFAULT_VECTOR_LENGTH = 20;
 
 // Teil 3 der Aufgabe
@@ -23,6 +25,8 @@ void print_vector(std::vector<int> vector)
 
 int main(int argc, char** argv) 
 {
+    auto start = std::chrono::system_clock::now();
+
 // Teil 1 der Aufgabe
     CLI::App app{"app, that can take a positive even integer as an inline input"};
     argv = app.ensure_utf8(argv);
@@ -53,10 +57,16 @@ int main(int argc, char** argv)
     fmt::print("Vor der Sortierung\n");
     print_vector(random_vec);
 
-    // Teil 4 der Aufgabe
+// Teil 4 der Aufgabe
     std::sort(random_vec.begin(), random_vec.end());
     fmt::print("Nach der Sortierung\n");
     print_vector(random_vec);
+    
+// Teil 5 der Aufgabe
+    auto end = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    fmt::print("Time needed to execute the main loop: {}\n", elapsed);
+
     return 0;
 }
 

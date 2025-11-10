@@ -18,5 +18,6 @@ int main()
 
     Point p2;           // Standardkonstruktor -> (0, 0)
     p2.print();         // Ausgabe: (0, 0)
-    return 1;
+
+    return 0;
 }

@@ -1,25 +1,36 @@
 #include "point.hpp"
 #include <fmt/format.h>
+#include <cstdio>
 
-
-// Methoden (Getter / Setter)
-void Point::set(int xx, int yy)
+// Methoden (Getter)
+int Point::x()
 {
-    Point::x = xx;
-    Point::y = yy;
+    return px;
+}
+
+int Point::y()
+{
+    return py;
+}
+
+// Methoden (Setter)
+void Point::set(int x, int y)
+{
+    px = x;
+    py = y;
     return;
 }
 
 void Point::move(int dx, int dy)
 {
-    Point::x += dx;
-    Point::y += dy;
+    px += dx;
+    py += dy;
     return;
 };
 
-void Point::print()const
+void Point::print() const
 {
-    fmt::print("({},", Point::x);
-    fmt::print("{})\n", Point::y);
+    fmt::print("({},", px);
+    fmt::print("{})\n", py);
     return;
 };

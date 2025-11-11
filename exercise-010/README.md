@@ -35,7 +35,7 @@ Empfohlene Punkte:
 - Ergebnisse der `std::chrono`-Messungen (mit kurzer Interpretation)
 - Besondere Randfälle/Fehlerbehandlung
 
-1. Erstellen Sie einen Pull Request auf GitHub von Ihrem Branch (z. B. `solution-010`) gegen den Hauptzweig.
+1. Erstellen Sie einen Pull Request auf GitHub von Ihrem Branch (z. B. `solution-010`) gegen den `exercise-010` Zweig.
 1. Tragen Sie den Benutzer `graugans` als Reviewer/Approver ein.
 1. Stellen Sie sicher, dass alle Catch2-Tests erfolgreich sind (CI/`ctest`) und die README sauber formatiert ist.
 1. Geben Sie Ihrem PR einen aussagekräftigen Titel (z. B. „exercise-010: tfe24::myvector mit Wachstum & chrono-Messungen“) und eine kurze Beschreibung Ihrer Umsetzung.

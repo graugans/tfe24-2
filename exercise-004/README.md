@@ -82,4 +82,4 @@ Formel:
 \]
 
 Weitere Informationen finden Sie hier:  
-[Wikipedia – Abstand zwischen zwei Punkten](https://de.wikipedia.org/wiki/Abstand_(Mathematik)#Abstand_zwischen_zwei_Punkten)
+[Wikipedia – Abstand zwischen zwei Punkten](https://en.wikipedia.org/wiki/Euclidean_distance#Two_dimensions)

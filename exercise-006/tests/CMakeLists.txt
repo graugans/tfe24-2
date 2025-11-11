@@ -12,8 +12,8 @@ add_executable( ${PROJECT_NAME}-tests
 # Add libraries
 target_link_libraries(${PROJECT_NAME}-tests PRIVATE
                                         fmt::fmt
-                                        nlohmann_json::nlohmann_json
-                                        Catch2::Catch2WithMain)
+                                        Catch2::Catch2WithMain
+                                        point)
 
 add_catch2_test(
   TARGET ${PROJECT_NAME}-tests

@@ -9,10 +9,14 @@ git branch -a
 git switch main
 # create a new local branch based on the upstream main
 git switch -c solution-010 upstream/main
-# perform changes
+# prepare the target branch for the pull request
+git branch exercise-010 3146e0b
+# push the new branch so we can use it in the GitHub UI
+git push origin exercise-010:exercise-010
 # ....
 git add exercise-010
-git commit -m "feat: add exercise number two"
+git commit -m "feat: add exercise number ten"
+
 # push the changes to the cloud
 git push -u origin solution-010
 ....

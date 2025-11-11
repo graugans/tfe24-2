@@ -7,66 +7,67 @@
 #include <algorithm> /* needed for the std::sort */
 #include <random>
 
-auto main(int argc, char **argv) -> int
+
+
+int DEFAULT_VECTOR_LENGTH = 20;
+
+// Teil 3 der Aufgabe
+void print_vector(std::vector<int> vector)
 {
-    auto counter = 5;
-    /**
-     * CLI11 is a command line parser to add command line options
-     * More info at https://github.com/CLIUtils/CLI11#usage
-     */
-    CLI::App app{"Strava for std::vectors"};
-    try
+    fmt::print("Vektor: ");
+    int vec_len = vector.size();
+    for (int i = 0; i < vec_len; i++) 
     {
-        app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));
-        app.add_option("-c,--count", counter, "An counter option")->default_val("3");
-        app.parse(argc, argv);
+        fmt::print("{}, ", vector[i]);
     }
-    catch (const CLI::ParseError &e)
-    {
-        return app.exit(e);
-    }
-
-    /**
-     * The {fmt} lib is a cross platform library for printing and formatting text
-     * it is much more convenient than std::cout and printf
-     * More info at https://fmt.dev/latest/api.html
-     */
-    fmt::print("Hello, {}!\n", app.get_name());
-    fmt::print("The counter value is: {}!\n", counter);
-
-        // Seed with a real random value, if available
-    std::random_device r;
-
-    // Choose a random mean between 1 and 100
-    // https://en.cppreference.com/w/cpp/numeric/random.html
-    std::default_random_engine e1(r());
-    std::uniform_int_distribution<int> uniform_dist(1, 100);
-    int rand_value = uniform_dist(e1);
-
-    std::vector<unsigned int> numbers;
-    auto start = std::chrono::system_clock::now();
-    for (int i = 0; i < counter; i++)
-    {
-        numbers.push_back(uniform_dist(e1));
-    }
-    auto end = std::chrono::system_clock::now();
-
-    const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    fmt::println("The inserting took: {}", elapsed);
-    fmt::println("The random vector: [ {} ]", fmt::join(numbers, ", "));
-
-    fmt::println("Let's sort the numbers vector");
-    fmt::println("--------------------------------------------------------------------------");
-
-    start = std::chrono::system_clock::now();
-    std::sort(numbers.begin(), numbers.end(), std::less<int>());
-    end = std::chrono::system_clock::now();
-
-    fmt::println("The sorted numbers vector");
-    fmt::println("--------------------------------------------------------------------------");
-    fmt::println("The sorted vector: [ {} ]", fmt::join(numbers, ", "));
-    const auto elapsed_sort = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    fmt::println("The sorting took: {}", elapsed_sort);
-
-    return 0; /* exit gracefully*/
+    fmt::print("\n");
 }
+
+int main(int argc, char** argv) 
+{
+    auto start = std::chrono::system_clock::now();
+
+// Teil 1 der Aufgabe
+    CLI::App app{"app, that can take a positive even integer as an inline input"};
+    argv = app.ensure_utf8(argv);
+    int vector_length = DEFAULT_VECTOR_LENGTH;
+    app.add_option("-c,--count", vector_length, "Absolute quantity of numbers in the vector");
+    try 
+    {
+    app.parse(argc, argv);
+    } 
+    catch (const CLI::ParseError &e) 
+    {
+    return app.exit(e);
+    }
+    fmt::print("vector length: {}\n", vector_length);
+
+// Teil 2 der Aufgabe
+    std::vector<int> random_vec;
+    // Zufallsgenerator
+    std::random_device random_seed;
+    std::mt19937 generator(random_seed());
+    std::uniform_int_distribution dis(1, 100);
+    // for-Schleife für Generation der Zufallszahlen
+    for (int iterator = 0; iterator < vector_length; iterator++) 
+    {
+        int random_number = dis(generator);
+        random_vec.push_back(random_number);
+    } 
+    fmt::print("Vor der Sortierung\n");
+    print_vector(random_vec);
+
+// Teil 4 der Aufgabe
+    std::sort(random_vec.begin(), random_vec.end());
+    fmt::print("Nach der Sortierung\n");
+    print_vector(random_vec);
+    
+// Teil 5 der Aufgabe
+    auto end = std::chrono::system_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    fmt::print("Time needed to execute the main loop: {}\n", elapsed);
+
+    return 0;
+}
+
+

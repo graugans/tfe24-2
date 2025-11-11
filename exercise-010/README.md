@@ -20,6 +20,9 @@ git commit -m "feat: add exercise number ten"
 # push the changes to the cloud
 git push -u origin solution-010
 ....
+
+# Show the git graph
+git log --graph --oneline --decorate --all
 ```
 
 ## Abgabemodalitäten

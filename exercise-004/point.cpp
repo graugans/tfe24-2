@@ -1,11 +1,10 @@
 #include "point.hpp"
+#include <fmt/format.h>
+#include <cstdio>
 
-Point::Point()
+void Point::print() const
 {
-
-}
-
-Point::Point(double x, double y) {
-    m_x = x;
-    m_y = y;    
-}
+    fmt::print("({},", px);
+    fmt::print("{})\n", py);
+    return;
+};

@@ -30,12 +30,23 @@ auto main(int argc, char **argv) -> int
     fmt::print("Hello, {}!\n", app.get_name());
 
     
+    using tfe24::myvector;
+
+    // simple smoke test
     {
-        MyVector vec;
+        myvector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        fmt::print("v.size() = {}\n", v.size());
+        fmt::print("v[1] = {}\n", v[1]);
+        v.resize(6);
+        fmt::print("after resize v.size() = {} capacity = {}\n", v.size(), v.capacity());
+        v.clear();
+        fmt::print("after clear v.size() = {}\n", v.size());
     }
 
-    MyVector vec2(27);
-    fmt::println("Hello exercise number 3 after Vector");
+    fmt::println("Hello exercise number 10: myvector demo complete");
 
     return 0; /* exit gracefully*/
 }

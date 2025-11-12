@@ -6,8 +6,8 @@ message( STATUS "Catch2 Tests included" )
 # 1) Tests and main in one file
 add_executable( ${PROJECT_NAME}-tests
   000-Main.cpp
-  001-TestCase.cpp
   ../myvector.cpp
+  001-TestCase.cpp
 )
 
 # Add libraries

@@ -1,41 +1,24 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 
-#include "CLI/CLI.hpp"
-#include "config.h"
 #include "myvector.hpp"
+#include <cassert>
+#include <string>
 
-auto main(int argc, char **argv) -> int
-{
-    /**
-     * CLI11 is a command line parser to add command line options
-     * More info at https://github.com/CLIUtils/CLI11#usage
-     */
-    CLI::App app{PROJECT_NAME};
-    try
-    {
-        app.set_version_flag("-V,--version", fmt::format("{} {}", PROJECT_VER, PROJECT_BUILD_DATE));
-        app.parse(argc, argv);
-    }
-    catch (const CLI::ParseError &e)
-    {
-        return app.exit(e);
-    }
+int main() {
+    using mystd::myvector;
 
-    /**
-     * The {fmt} lib is a cross platform library for printing and formatting text
-     * it is much more convenient than std::cout and printf
-     * More info at https://fmt.dev/latest/api.html
-     */
-    fmt::print("Hello, {}!\n", app.get_name());
+    myvector<int> v;
+    v.push_back(1);
+    v.push_back(2);
+    v.push_back(3);
 
-    
-    {
-        MyVector vec;
-    }
+    assert(v.size() == 3);
+    assert(v.at(0) == 1);
+    assert(v[1] == 2);
 
-    MyVector vec2(27);
-    fmt::println("Hello exercise number 3 after Vector");
+    v.resize(10);
+    v.clear();
 
-    return 0; /* exit gracefully*/
+    return 0;
 }

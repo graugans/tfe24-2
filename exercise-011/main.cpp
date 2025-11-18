@@ -50,6 +50,8 @@ auto main(int argc, char** argv) -> int
 
     // JSON parsen
     json doc = json::parse(text);
+    fmt::print("JSON-Dokument geladen: {}\n", doc.dump(4));
+    fmt::print("Version from JSON: {}\n", doc["version"].get<std::string>());
 
     return EXIT_SUCCESS; /* exit gracefully*/
 }

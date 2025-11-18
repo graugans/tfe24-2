@@ -26,3 +26,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
                                         fmt::fmt
                                         CLI11::CLI11
                                         nlohmann_json::nlohmann_json)
+
+# Add the tests
+if(BUILD_TESTS)
+  add_subdirectory(tests)
+endif(BUILD_TESTS)

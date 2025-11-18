@@ -8,4 +8,9 @@ constexpr auto PROJECT_VER_MINOR {"@PROJECT_VERSION_MINOR@"};
 constexpr auto PTOJECT_VER_PATCH {"@PROJECT_VERSION_PATCH@"};
 constexpr auto PROJECT_BUILD_DATE {"@BUILD_DATE@"};
 
+namespace config {
+    constexpr auto data_dir = "@CMAKE_CURRENT_SOURCE_DIR@/tests";
+    constexpr auto json_tests = "@CMAKE_CURRENT_SOURCE_DIR@/tests/test_vectors.json";
+}
+
 #endif // CONFIG_H_IN

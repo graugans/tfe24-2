@@ -153,6 +153,6 @@ private:
     size_t m_capacity;
 };
 
-}  // namespace mystd
+}    // namespace mystd
 
 #endif /* MYVECTOR_HPP */

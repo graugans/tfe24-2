@@ -1,20 +1,20 @@
-#include "point.hpp"
+#include "point/point.hpp"
 #include <fmt/core.h> // Für fmt::print
 #include <cmath>     // Für std::sqrt
 
 Point::Point(): m_x(0.0), m_y(0.0) {
     // Die Werte für m_x und m_y werden in der Initialisierungsliste gesetzt
-    fmt::print("Standardkonstruktor (CTOR) aufgerufen: Point({}, {})\n", m_x, m_y);
+    fmt::print("[lib] Standardkonstruktor (CTOR) aufgerufen: Point({}, {})\n", m_x, m_y);
 }
 
 Point::Point(double x, double y) {
     m_x = x;
     m_y = y;
-    fmt::print("Konstruktor (CTOR) aufgerufen: Point({}, {})\n", m_x, m_y);
+    fmt::print("[lib] Konstruktor (CTOR) aufgerufen: Point({}, {})\n", m_x, m_y);
 }
 
 Point::~Point() {
-    fmt::print("Destruktor (DTOR) aufgerufen: Point({}, {})\n", m_x, m_y);
+    fmt::print("[lib] Destruktor (DTOR) aufgerufen: Point({}, {})\n", m_x, m_y);
 }
 
 void Point::move(double deltaX, double deltaY) {
@@ -24,7 +24,7 @@ void Point::move(double deltaX, double deltaY) {
 
 
 void Point::print() const {
-    fmt::print("Point({}, {})\n", m_x, m_y);
+    fmt::print("[lib] Point({}, {})\n", m_x, m_y);
 }
 
 

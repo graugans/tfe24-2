@@ -14,6 +14,9 @@ class Point {
         void print() const;
         // Zusatzaufgabe
         double distance_to(const Point& other) const;
+        // Getter für Tests
+        const double& getX() const { return m_x; }
+        const double& getY() const { return m_y; }
 
     private:
         double m_x;

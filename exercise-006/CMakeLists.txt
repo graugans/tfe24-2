@@ -11,8 +11,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Include dependencies
 find_package(fmt REQUIRED)
-find_package(nlohmann_json REQUIRED)
-find_package(CLI11 CONFIG REQUIRED)
 find_package(Catch2 3 REQUIRED)
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in" "${CMAKE_CURRENT_BINARY_DIR}/include/config.h" @ONLY)
@@ -24,8 +22,7 @@ add_executable(${PROJECT_NAME} main.cpp)
 # Add libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
                                         fmt::fmt
-                                        CLI11::CLI11
-                                        nlohmann_json::nlohmann_json)
+                                        point)
 
 # Add the tests
 if(BUILD_TESTS)

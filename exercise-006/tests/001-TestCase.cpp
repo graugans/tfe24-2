@@ -1,36 +1,55 @@
 // 001-TestCase.cpp
-// And write tests in the same file:
 #include <catch2/catch_test_macros.hpp>
 
-static auto factorial(int number) -> int
-{
-    // return number <= 1 ? number : Factorial( number - 1 ) * number;  // fail
-    return number <= 1 ? 1 : factorial(number - 1) * number;  // pass
+// For approximate floating-point comparisons
+#include <catch2/catch_approx.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+
+// Include the Point class header
+#include "point/point.hpp"
+
+TEST_CASE("Point: Konstruktoren") {
+    SECTION("Init mit Werten") {
+        Point<double> p{2, 3};
+        REQUIRE(p.getX() == 2);
+        REQUIRE(p.getY() == 3);
+    }
+    SECTION("Default-Konstruktor") {
+        Point<int> p;
+        REQUIRE(p.getX() == 0);
+        REQUIRE(p.getY() == 0);
+    }
 }
 
-TEST_CASE("Factorial of 0 is 1 (fail)", "[single-file]")
-{
-    REQUIRE(factorial(0) == 0);
+TEST_CASE("Point: move verschiebt relativ") {
+    Point<double> p{1, 1};
+    p.move(2, -3);
+    REQUIRE(p.getX() == 3);
+    REQUIRE(p.getY() == -2);
 }
 
-TEST_CASE("Factorials of 1 and higher are computed (pass)", "[single-file]")
-{
-    REQUIRE(factorial(1) == 1);
-    REQUIRE(factorial(2) == 2);
-    REQUIRE(factorial(3) == 6);
-    REQUIRE(factorial(10) == 3628800);
+TEST_CASE("Printing of the point in a testcase") {
+    Point<double> p{1, 1};
+    p.move(2, -3);
+    REQUIRE(p.getX() == 3);
+    REQUIRE(p.getY() == -2);
+    //fmt::println("Point p after move: {}", p);
 }
 
-// Compile & run:
-// - g++ -std=c++11 -Wall -I$(CATCH_SINGLE_INCLUDE) -o 010-TestCase 010-TestCase.cpp && 010-TestCase --success
-// - cl -EHsc -I%CATCH_SINGLE_INCLUDE% 010-TestCase.cpp && 010-TestCase --success
+TEST_CASE("Point: distance_to – euklidisch & robust") {
+    Point a{0, 0};
+    Point b{3, 4};
 
-// Expected compact output (all assertions):
-//
-// prompt> 010-TestCase --reporter compact --success
-// 010-TestCase.cpp:14: failed: Factorial(0) == 1 for: 0 == 1
-// 010-TestCase.cpp:18: passed: Factorial(1) == 1 for: 1 == 1
-// 010-TestCase.cpp:19: passed: Factorial(2) == 2 for: 2 == 2
-// 010-TestCase.cpp:20: passed: Factorial(3) == 6 for: 6 == 6
-// 010-TestCase.cpp:21: passed: Factorial(10) == 3628800 for: 3628800 (0x375f00) == 3628800 (0x375f00)
-// Failed 1 test case, failed 1 assertion.
+    // Zum Vergleich von Gleitkommazahlen
+    // https://github.com/catchorg/Catch2/blob/devel/docs/comparing-floating-point-numbers.md#comparing-floating-point-numbers-with-catch2
+
+    // See: https://github.com/catchorg/Catch2/blob/devel/docs/comparing-floating-point-numbers.md#approx
+    REQUIRE( a.distance_to(b) == Catch::Approx(5.0).margin(1e-12) );
+    REQUIRE( b.distance_to(a) == Catch::Approx(5.0).margin(1e-12) );
+    REQUIRE( a.distance_to(a) == Catch::Approx(0.0).margin(1e-12) );
+
+    // Alternative mit Matchern
+    REQUIRE_THAT(a.distance_to(b),  Catch::Matchers::WithinRel(5.0, 1e-12));
+    REQUIRE_THAT(b.distance_to(a),  Catch::Matchers::WithinRel(5.0, 1e-12));
+    REQUIRE_THAT(a.distance_to(a),  Catch::Matchers::WithinRel(0.0, 1e-12));
+}

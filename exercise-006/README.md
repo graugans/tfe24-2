@@ -18,8 +18,8 @@ git push -u origin solution-006
 ....
 ```
 
-**Ziel:** Überführen der bisherigen `Point`-Klasse in eine **generische** Template-Klasse `Point<T>` für unterschiedliche Zahlentypen – **ohne C++20 Concepts**, vollständig **C++17-kompatibel**.  
-Schwerpunkte: Templates, `static_assert`/Type-Traits, sicherer Rückgabetyp für `distance_to`, `fmt`-Formatter, Catch2-Tests.
+**Ziel:** Überführen der bisherigen `Point`-Klasse in eine **generische** Template-Klasse `Point<T>` für unterschiedliche Zahlentypen 
+Schwerpunkte: `fmt`-Formatter, Catch2-Tests.
 
 ---
 
@@ -29,6 +29,7 @@ Schwerpunkte: Templates, `static_assert`/Type-Traits, sicherer Rückgabetyp für
    - `template <typename T> class Point` mit Membern `T x; T y;`
    - Standardkonstruktor: `x = T{}`, `y = T{}`
    - Wertekonstruktor: `Point(T x, T y)`
+   - Kopierkonstruktor `Point(const Point<T>& p)`
    - Methode: `void move(T dx, T dy)`
 
 2. **Typ-Constraint (ohne Concepts)**
@@ -45,16 +46,14 @@ Schwerpunkte: Templates, `static_assert`/Type-Traits, sicherer Rückgabetyp für
    - Signatur:
   
      ```cpp
-     auto distance_to(const Point& other) const -> /* geeigneter Typ */;
+     T Point<T>::distance_to(const Point<T>& other) const
      ```
 
-   - Nutzen Sie als Rückgabetyp **`std::common_type_t<T, double>`** (oder `double`).  
    - Implementierung mit `std::hypot` (C++17 vorhanden). Vor dem Rechnen in den breiteren Typ casten:
 
      ```cpp
-     using dist_t = std::common_type_t<T, double>;
-     auto dx = static_cast<dist_t>(x) - static_cast<dist_t>(other.x);
-     auto dy = static_cast<dist_t>(y) - static_cast<dist_t>(other.y);
+     auto dx = x - other.x;
+     auto dy = y - other.y;
      return std::hypot(dx, dy);
      ```
 
@@ -62,8 +61,8 @@ Schwerpunkte: Templates, `static_assert`/Type-Traits, sicherer Rückgabetyp für
    - Implementieren Sie `operator==` und `operator!=` **explizit** (kein `= default` erforderlich, aber erlaubt):
 
      ```cpp
-     bool operator==(const Point& rhs) const { return x == rhs.x && y == rhs.y; }
-     bool operator!=(const Point& rhs) const { return !(*this == rhs); }
+     bool operator==(const Point<T>& rhs) const { return x == rhs.x && y == rhs.y; }
+     bool operator!=(const Point<T>& rhs) const { return !(*this == rhs); }
      ```
 
 5. **fmt-Integration (C++17)**
@@ -112,15 +111,14 @@ public:
 
   void move(T dx, T dy) { x += dx; y += dy; }
 
-  using dist_t = std::common_type_t<T, double>;
-  auto distance_to(const Point& other) const -> dist_t {
-    const auto dx = static_cast<dist_t>(x) - static_cast<dist_t>(other.x);
-    const auto dy = static_cast<dist_t>(y) - static_cast<dist_t>(other.y);
+  T distance_to(const Point<T>& other) const {
+    const auto dx = x - other.x;
+    const auto dy = y - other.y;
     return std::hypot(dx, dy);
   }
 
-  bool operator==(const Point& rhs) const { return x == rhs.x && y == rhs.y; }
-  bool operator!=(const Point& rhs) const { return !(*this == rhs); }
+  bool operator==(const Point<T>& rhs) const { return x == rhs.x && y == rhs.y; }
+  bool operator!=(const Point<T>& rhs) const { return !(*this == rhs); }
 };
 ```
 

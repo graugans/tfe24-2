@@ -26,7 +26,7 @@ Nach Abschluss des Testats sollen Sie
 
 ### 2.1 Model Context Protocol (MCP)
 
-MCP ist ein offenes Protokoll, mit dem LLM-Clients (z. B. ChatGPT Desktop) externe Tools, Ressourcen und Prompts anbinden können. Ein MCP-Server
+MCP ist ein offenes Protokoll, mit dem LLM-Clients (z. B. ChatGPT Desktop) externe Tools, Ressourcen und Prompts anbinden können. Ein MCP-Server
 
 - läuft als separater Prozess,
 - kommuniziert typischerweise über **stdin/stdout**,
@@ -43,6 +43,10 @@ In diesem Testat fokussieren wir uns auf
 
 - einen lokal laufenden Prozess, der über stdin/stdout angesprochen wird,
 - die oben genannten Kernmethoden.
+
+**Weiterführende Dokumentation:**
+
+- [VS Code: Customizing Copilot with MCP Servers](https://code.visualstudio.com/docs/copilot/customization/mcp-servers)
 
 ### 2.2 JSON-RPC 2.0 – Das Kommunikationsprotokoll
 

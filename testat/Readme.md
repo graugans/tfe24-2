@@ -44,7 +44,118 @@ In diesem Testat fokussieren wir uns auf
 - einen lokal laufenden Prozess, der über stdin/stdout angesprochen wird,
 - die oben genannten Kernmethoden.
 
-### 2.2 Tankerkönig-API (Spritpreise)
+### 2.2 JSON-RPC 2.0 – Das Kommunikationsprotokoll
+
+**JSON-RPC 2.0** ist ein zustandsloses, leichtgewichtiges Remote Procedure Call (RPC) Protokoll. Es definiert, wie Client und Server strukturiert miteinander kommunizieren.
+
+#### 2.2.1 Grundprinzipien
+
+- **Transport-agnostisch:** Funktioniert über HTTP, WebSockets, stdin/stdout, etc.
+- **JSON-basiert:** Alle Nachrichten sind gültige JSON-Objekte
+- **Zustandslos:** Jede Anfrage ist unabhängig
+- **Bidirektional:** Sowohl Client als auch Server können Requests senden
+
+#### 2.2.2 Nachrichtentypen
+
+**Request (Anfrage):**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools.list",
+  "params": {}
+}
+```
+
+- `jsonrpc` – **Pflicht**, immer `"2.0"`
+- `id` – **Pflicht** für Requests, die eine Antwort erwarten (String oder Number)
+- `method` – **Pflicht**, Name der aufzurufenden Methode (String)
+- `params` – **Optional**, Parameter als Object oder Array
+
+**Notification (Request ohne Antwort):**
+
+Eine Notification ist ein Request **ohne** `id`-Feld. Der Server sendet keine Response.
+
+**Success Response (Erfolgreiche Antwort):**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "tools": [
+      {
+        "name": "listStations",
+        "description": "Tankstellen im Umkreis finden"
+      }
+    ]
+  }
+}
+```
+
+- `jsonrpc` – **Pflicht**, immer `"2.0"`
+- `id` – **Pflicht**, muss mit Request-ID übereinstimmen
+- `result` – **Pflicht**, Ergebnis der Methode (beliebiger JSON-Typ)
+
+**Error Response (Fehlerantwort):**
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "error": {
+    "code": -32601,
+    "message": "Method not found",
+    "data": "Unknown method: tools.foo"
+  }
+}
+```
+
+- `jsonrpc` – **Pflicht**, immer `"2.0"`
+- `id` – **Pflicht**, ID des fehlgeschlagenen Requests (oder `null` bei Parse-Fehlern)
+- `error` – **Pflicht**, Error-Object mit:
+  - `code` – Integer, vordefinierte Error-Codes
+  - `message` – String, kurze Fehlerbeschreibung
+  - `data` – **Optional**, zusätzliche Fehlerinformationen
+
+#### 2.2.3 Standard Error-Codes
+
+| Code | Message | Bedeutung |
+|------|---------|-----------|
+| -32700 | Parse error | Ungültiges JSON |
+| -32600 | Invalid Request | JSON ist kein gültiger Request |
+| -32601 | Method not found | Methode existiert nicht |
+| -32602 | Invalid params | Ungültige Parameter |
+| -32603 | Internal error | Interner Server-Fehler |
+
+Custom Error-Codes sollten außerhalb des Bereichs -32768 bis -32000 liegen.
+
+#### 2.2.4 Batch-Requests (Optional)
+
+JSON-RPC 2.0 unterstützt das Senden mehrerer Requests in einem Array:
+
+```json
+[
+  {"jsonrpc": "2.0", "id": 1, "method": "tools.list"},
+  {"jsonrpc": "2.0", "id": 2, "method": "tools.call", "params": {"name": "listStations"}}
+]
+```
+
+**Hinweis:** Batch-Requests sind **optional** für dieses Testat.
+
+#### 2.2.5 Wichtig für Ihre Implementierung
+
+- **Immer validieren:** Prüfen Sie, ob `jsonrpc: "2.0"` vorhanden ist
+- **Error-Handling:** Ungültiges JSON → Error -32700, unbekannte Methode → Error -32601
+- **ID-Matching:** Response-ID muss immer mit Request-ID übereinstimmen
+- **Null-ID:** Bei Parse-Fehlern (bevor ID gelesen werden kann) ist `"id": null` zulässig
+
+**Referenz:** [JSON-RPC 2.0 Specification](https://www.jsonrpc.org/specification)
+
+---
+
+### 2.3 Tankerkönig-API (Spritpreise)
 
 Die Tankerkönig-API stellt aktuelle Spritpreise und Tankstelleninformationen zur Verfügung:
 
@@ -64,10 +175,10 @@ Typische Parameter für `list.php`:
 **Wichtige Hinweise:**
 
 - Für die Nutzung ist ein **persönlicher API-Key** erforderlich.
-- API-Keys dürfen **nicht** in öffentliche Repositories (z. B. GitHub) eingecheckt werden.
+- API-Keys dürfen **nicht** in öffentliche Repositories (z. B. GitHub) eingecheckt werden.
 - Sie sollen Anfragen in vernünftigen Intervallen durchführen (kein Spamming).
 
-### 2.3 Photon-API (Geocoding)
+### 2.4 Photon-API (Geocoding)
 
 Photon (photon.komoot.io) ist eine Geocoding-API, die aus einer Adresse Koordinaten (Longitude/Latitude) erzeugt. Ein typischer Request:
 
@@ -192,10 +303,10 @@ TANKERKOENIG_API_KEY=
 .env
 ```
 
-**In C++ nutzen:**  
+**In C++ nutzen:**
 Sie können eine kleine Hilfsfunktion schreiben, die `.env` parst, oder C++-Libraries wie [cpp-dotenv](https://github.com/laserpants/cpp-dotenv) verwenden.
 
-**Wichtig:**  
+**Wichtig:**
 Prüfen Sie **vor jedem Commit** mit `git status`, dass `.env` nicht versehentlich eingecheckt wird!
 
 ---
@@ -799,9 +910,9 @@ Viel Erfolg – und denken Sie daran:
 
 ## Abgabe
 
-Die Abgabe erfolgt bis spätestens 14.03.2025 um 23:59 Uhr. Über einen Pull-Request im spezifische Team Repository. Erstellen Sie hierzu einen Branch `testat-001` analog zu folgender Graphik:
+Die Abgabe erfolgt bis spätestens 01.03.2025 um 23:59 Uhr. Über einen Pull-Request im spezifische Team Repository. Erstellen Sie hierzu einen Branch `testat-001` analog zu folgender Graphik:
 
-![](https://mermaid.ink/img/pako:eNqdkMEKwjAMhl-l5DxhXnsWNmEn9dhL7LJ1uLajSw9j7N2tiAgyRRYI5CfJ94fMoH1NIEG0HRcBByOqk1ROPEN7azv-Jq8BnTaCaWTkXZ7v_9xbxzSEHANt52hD-uYjrx1kKbS0xeLFtNi5D9rbRvA0kBTlsSirlJffcMggARKwTn-fH00FbMiSApnKmhqMPStQbkmjGNmfJ6dBcoiUQRxqZDp02Aa0IBvsR1ruc2aHwg?type=png)
+![Git Branching Strategie - Testat Workflow](https://mermaid.ink/img/pako:eNqdkMEKwjAMhl-l5DxhXnsWNmEn9dhL7LJ1uLajSw9j7N2tiAgyRRYI5CfJ94fMoH1NIEG0HRcBByOqk1ROPEN7azv-Jq8BnTaCaWTkXZ7v_9xbxzSEHANt52hD-uYjrx1kKbS0xeLFtNi5D9rbRvA0kBTlsSirlJffcMggARKwTn-fH00FbMiSApnKmhqMPStQbkmjGNmfJ6dBcoiUQRxqZDp02Aa0IBvsR1ruc2aHwg?type=png)
 
 Sie entwickeln Ihre Features in separaten Branches welche Sie jeweils mittels Pull-Request in Ihren Branch `testat-001` mergen.
 

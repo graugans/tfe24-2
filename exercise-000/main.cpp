@@ -1,64 +1,68 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
-
+#include <iostream>
 #include "config.h"
 
-void changeValueByParameter(int value) {
-    value = 42;
-}
-
-void changeValueByPointer(double* ptr) {
-    *ptr = 42;
-}
-
-auto main(int argc, char **argv) -> int
+// Definieren Sie zwei Funktionen
+void changeValueByParameter(int value)
 {
+    value = 80;
+    fmt::print("value by (paramter): {}\n", value);
+    return;
+}
+void changeValueByPointer(int* ptr)
+{
+    *ptr = 90;
+    fmt::print("value (by pointer): {}\n", *ptr);
+    return;
+}
 
-    /**
-     * The {fmt} lib is a cross platform library for printing and formatting text
-     * it is much more convenient than std::cout and printf
-     * More info at https://fmt.dev/latest/api.html
-     */
-    fmt::print("Hello, {}!\n", tfe24::PROJECT_NAME);
-
+int main() 
+{
+// Teil 1: Zeiger-Grundlagen
+// Legen Sie eine int-Variable x mit dem Wert 10 an.
     int x = 10;
-    int *p = &x;
-    
-    fmt::println("The value of x: {},             the address of x:{}",x, fmt::ptr(&x));
-    fmt::println("The value p is pointing to: {}, the address of p:{}",*p, fmt::ptr(p));
-
-    // change the vale of the variable p is pointing at
+// Deklarieren Sie einen Zeiger p, der auf x zeigt.
+    int * p = &x;
+// Geben Sie mit fmt::print den Wert von x und die Adresse von x aus.
+    fmt::print("Wert von x: {}\n", x);
+    fmt::print("Adresse von x: {}\n\n", fmt::ptr(&x)); 
+// Geben Sie den Wert aus, auf den der Zeiger p zeigt, sowie die Adresse, die in p gespeichert ist.
+    fmt::print("Wert auf den p zeigt: {}\n", *p);
+    fmt::print("Adresse von die in p gespeichert ist: {}\n\n", fmt::ptr(p));
+// Ändern Sie den Wert von x über den Zeiger p auf 42.
     *p = 42;
-    fmt::println("The value p is pointing to: {}, the address of p:{}",*p, fmt::ptr(p));
-    fmt::println("The value of x: {},             the address of x:{}",x, fmt::ptr(&x));
-
-    // Let's double the fun
-    double bar = 100.001;
-    double* pD = &bar;
-
-    fmt::println("The value pD is pointing to: {}, the address of pD:{}",*pD, fmt::ptr(pD));
-    fmt::println("The value of x: {},             the address of x:{}",bar, fmt::ptr(&bar));
-
-    pD = new double(3.1415);
-    fmt::println("The value pD is pointing to: {}, the address of pD:{}",*pD, fmt::ptr(pD));
-    fmt::println("The value of x: {},             the address of x:{}",bar, fmt::ptr(&bar));
-
-
-    *pD = 47.11;
-    fmt::println("The value pD is pointing to: {}, the address of pD:{}",*pD, fmt::ptr(pD));
-    fmt::println("The value of x: {},             the address of x:{}",bar, fmt::ptr(&bar));
-
-    fmt::println("The value of bar is {}, the address of bar:{}",bar, fmt::ptr(&bar));
-    changeValueByParameter(bar);
-    fmt::println("After the call to changeValueByParameter");
-    fmt::println("The value of bar is {}, the address of bar:{}",bar, fmt::ptr(&bar));
-
-    fmt::println("The value pD is pointing to: {}, the address of pD:{}",*pD, fmt::ptr(pD));
-    changeValueByPointer(pD);
-    fmt::println("After the call to changeValueByPointer");
-    fmt::println("The value pD is pointing to: {}, the address of pD:{}",*pD, fmt::ptr(pD));
+// Geben Sie erneut den Wert von x und den Wert aus, auf den p zeigt.
+    fmt::print("Wert von x: {}\n", x);
+    fmt::print("Wert auf den p zeigt: {}\n\n", *p);
     
+// Teil 2: Dynamische Speicherverwaltung
+// Deklarieren Sie einen Zeiger auf double.
+// Reservieren Sie mit new Speicher für genau einen double-Wert und initialisieren Sie ihn mit 3.1415.
+    double* d = new double(3.1415);
+// Geben Sie Wert und Adresse mit fmt::print aus.
+    fmt::print("Adresse von d: {}\n", fmt::ptr(d));
+    fmt::print("Wert auf den d zeigt: {}\n\n", *d);
+// Geben Sie den Speicher anschließend wieder mit delete frei.
+    delete d;
 
-    delete pD;
+// Teil 3: Funktionen mit Zeigern
+    changeValueByParameter(x);
+    fmt::print("Change x by Parameter: x = {}\n", x);
+    changeValueByPointer(p);
+    fmt::print("Change x by Pointer: x = {}\n\n", x);
+    
+// Aufgabe
+// Deklarieren Sie eine int-Variable y = 5;.
+    int y = 5;
+// Rufen Sie changeValueByParameter(y); auf und geben Sie vor und nach dem Funktionsaufruf den Wert von y aus.
+    fmt::print("Wert von y (vor Aufruf): {}\n", y);
+    changeValueByParameter(y);
+    fmt::print("Wert von y (nach Aufruf): {}\n", y);
+//Rufen Sie changeValueByPointer(&y); auf und geben Sie vor und nach dem Funktionsaufruf den Wert von y aus.
+    fmt::print("Wert von y (vor Aufruf): {}\n", y);
+    changeValueByPointer(&y);
+    fmt::print("Wert von y (nach Aufruf): {}\n", y);
+    
     return 0; /* exit gracefully*/
 }

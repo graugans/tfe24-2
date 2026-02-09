@@ -5,6 +5,7 @@
 
 #include "CLI/CLI.hpp"
 #include "config.h"
+#include "point.hpp"
 
 // for convenience
 using json = nlohmann::json;
@@ -33,7 +34,29 @@ auto main(int argc, char **argv) -> int
      */
     fmt::print("Hello, {}!\n", app.get_name());
 
-    /* INSERT YOUR CODE HERE */
+    /* Example usage of Point<T> template class */
+    fmt::print("\n--- Point<T> Template Examples ---\n");
+
+    // Example with int
+    Point<int> p1{2, 3};
+    Point<int> p2{5, 7};
+    fmt::print("p1 = {}\n", p1);
+    fmt::print("p2 = {}\n", p2);
+    fmt::print("Distance from p1 to p2: {}\n", p1.distance_to(p2));
+
+    // Example with double
+    Point<double> p3{1.5, 2.5};
+    fmt::print("p3 = {}\n", p3);
+    p3.move(0.5, 1.0);
+    fmt::print("p3 after move(0.5, 1.0) = {}\n", p3);
+
+    // Example with float
+    Point<float> p4{0.0f, 0.0f};
+    Point<float> p5{3.0f, 4.0f};
+    fmt::print("p4 = {}\n", p4);
+    fmt::print("p5 = {}\n", p5);
+    fmt::print("Distance from p4 to p5: {}\n", p4.distance_to(p5));
 
     return 0; /* exit gracefully*/
 }
+

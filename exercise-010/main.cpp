@@ -1,5 +1,7 @@
 #include <fmt/chrono.h>
 #include <fmt/format.h>
+#include <cassert>
+#include <string>
 
 #include "CLI/CLI.hpp"
 #include "config.h"
@@ -29,13 +31,118 @@ auto main(int argc, char **argv) -> int
      */
     fmt::print("Hello, {}!\n", app.get_name());
 
-    
+    // Test 1: Default constructor
     {
-        MyVector vec;
+        mystd::myvector<int> v;
+        assert(v.size() == 0);
+        assert(v.capacity() == 0);
+        fmt::println("✓ Test 1: Default constructor passed");
     }
 
-    MyVector vec2(27);
-    fmt::println("Hello exercise number 3 after Vector");
+    // Test 2: Constructor with size
+    {
+        mystd::myvector<int> v(5);
+        assert(v.size() == 5);
+        assert(v.capacity() >= 5);
+        fmt::println("✓ Test 2: Constructor with size passed");
+    }
+
+    // Test 3: push_back
+    {
+        mystd::myvector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        assert(v.size() == 3);
+        assert(v[0] == 1);
+        assert(v[1] == 2);
+        assert(v[2] == 3);
+        fmt::println("✓ Test 3: push_back passed");
+    }
+
+    // Test 4: at() with bounds checking
+    {
+        mystd::myvector<int> v;
+        v.push_back(10);
+        v.push_back(20);
+        assert(v.at(0) == 10);
+        assert(v.at(1) == 20);
+        
+        try {
+            v.at(5);
+            assert(false); // Should not reach here
+        } catch (const std::out_of_range&) {
+            fmt::println("✓ Test 4: at() bounds checking passed");
+        }
+    }
+
+    // Test 5: Copy constructor
+    {
+        mystd::myvector<int> v1;
+        v1.push_back(100);
+        v1.push_back(200);
+        
+        mystd::myvector<int> v2 = v1;
+        assert(v2.size() == 2);
+        assert(v2[0] == 100);
+        assert(v2[1] == 200);
+        fmt::println("✓ Test 5: Copy constructor passed");
+    }
+
+    // Test 6: Copy assignment operator
+    {
+        mystd::myvector<int> v1;
+        v1.push_back(42);
+        
+        mystd::myvector<int> v2;
+        v2 = v1;
+        assert(v2.size() == 1);
+        assert(v2[0] == 42);
+        fmt::println("✓ Test 6: Copy assignment operator passed");
+    }
+
+    // Test 7: resize()
+    {
+        mystd::myvector<int> v;
+        v.push_back(1);
+        v.resize(5);
+        assert(v.size() == 5);
+        assert(v[0] == 1);
+        assert(v[1] == 0);  // Default initialized
+        fmt::println("✓ Test 7: resize() passed");
+    }
+
+    // Test 8: reserve()
+    {
+        mystd::myvector<int> v;
+        size_t old_cap = v.capacity();
+        v.reserve(100);
+        assert(v.capacity() >= 100);
+        fmt::println("✓ Test 8: reserve() passed");
+    }
+
+    // Test 9: clear()
+    {
+        mystd::myvector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.clear();
+        assert(v.size() == 0);
+        fmt::println("✓ Test 9: clear() passed");
+    }
+
+    // Test 10: Template with strings
+    {
+        mystd::myvector<std::string> sv;
+        sv.push_back("hello");
+        sv.push_back("world");
+        assert(sv.size() == 2);
+        assert(sv[0] == "hello");
+        assert(sv[1] == "world");
+        fmt::println("✓ Test 10: Template with strings passed");
+    }
+
+    fmt::println("\n✓ All tests passed!");
 
     return 0; /* exit gracefully*/
 }

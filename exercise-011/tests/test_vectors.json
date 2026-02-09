@@ -1,0 +1,86 @@
+{
+  "cases": [
+    {
+      "name": "push_and_read",
+      "initial_values": [1, 2, 3],
+      "operations": [
+        { "op": "push_back", "value": 5 },
+        { "op": "at", "index": 1 }
+      ],
+      "expect": {
+        "final_size": 4,
+        "reads": [ { "index": 1, "value": 2 } ],
+        "final_values": [1, 2, 3, 5]
+      }
+    },
+    {
+      "name": "resize_up_and_down",
+      "initial_capacity": 0,
+      "initial_size": 2,
+      "operations": [
+        { "op": "resize", "new_size": 10 },
+        { "op": "resize", "new_size": 3 }
+      ],
+      "expect": {
+        "final_size": 3,
+        "min_capacity": 10
+      }
+    },
+    {
+      "name": "out_of_range_read_is_error",
+      "initial_values": [7],
+      "operations": [
+        { "op": "at", "index": 5 }
+      ],
+      "expect": {
+        "final_size": 1,
+        "errors": [ { "op": "at", "index": 5, "error": "out_of_range" } ]
+      }
+    },
+    {
+      "name": "push_resize_read",
+      "initial_capacity": 0,
+      "initial_size": 0,
+      "initial_values": [1, 2, 3],
+      "operations": [
+        { "op": "push_back", "value": 5 },
+        { "op": "resize", "new_size": 6 },
+        { "op": "at", "index": 1 },
+        { "op": "clear" }
+      ],
+      "expect": {
+        "final_size": 0,
+        "reads": [ { "index": 1, "value": 2 } ]
+      }
+    },
+    {
+      "name": "reserve_and_capacity",
+      "initial_values": [],
+      "operations": [
+        { "op": "reserve", "new_cap": 32 },
+        { "op": "push_back", "value": 10 },
+        { "op": "push_back", "value": 20 }
+      ],
+      "expect": {
+        "final_size": 2,
+        "min_capacity": 32,
+        "final_values": [10, 20]
+      }
+    },
+    {
+      "name": "multiple_push_back_growth",
+      "initial_values": [],
+      "operations": [
+        { "op": "push_back", "value": 1 },
+        { "op": "push_back", "value": 2 },
+        { "op": "push_back", "value": 3 },
+        { "op": "push_back", "value": 4 },
+        { "op": "push_back", "value": 5 }
+      ],
+      "expect": {
+        "final_size": 5,
+        "final_values": [1, 2, 3, 4, 5]
+      }
+    }
+  ]
+}

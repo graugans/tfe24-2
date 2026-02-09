@@ -5,6 +5,7 @@
 
 #include "CLI/CLI.hpp"
 #include "config.h"
+#include "myvector.hpp"
 
 // for convenience
 using json = nlohmann::json;
@@ -33,7 +34,17 @@ auto main(int argc, char **argv) -> int
      */
     fmt::print("Hello, {}!\n", app.get_name());
 
-    /* INSERT YOUR CODE HERE */
+    // Demonstration of myvector
+    mystd::myvector<int> v;
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    fmt::print("myvector size: {}, capacity: {}\n", v.size(), v.capacity());
+    fmt::print("Elements: ");
+    for (size_t i = 0; i < v.size(); ++i) {
+        fmt::print("{} ", v[i]);
+    }
+    fmt::print("\n");
 
     return 0; /* exit gracefully*/
 }

@@ -4,6 +4,15 @@
 #include "CLI/CLI.hpp"
 #include "config.h"
 
+// Teil 1: Globale Variable (Data-Segment)
+int globalVar = 1;
+
+// Teil 4: Funktion (Code-Segment)
+void foo()
+{
+    fmt::print("Hello from foo!\n");
+}
+
 auto main(int argc, char **argv) -> int
 {
     /**
@@ -28,7 +37,41 @@ auto main(int argc, char **argv) -> int
      */
     fmt::print("Hello, {}!\n", app.get_name());
 
-    /* INSERT YOUR CODE HERE */
+    fmt::print("\n=== Speichersegmente in C++ ===\n\n");
+
+    // Teil 1: Globale Variable (Data-Segment)
+    fmt::print("Teil 1: Globale Variable (Data-Segment)\n");
+    fmt::print("  globalVar = {}\n", globalVar);
+    fmt::print("  Adresse: {:p}\n\n", fmt::ptr(&globalVar));
+
+    // Teil 2: Lokale Variable (Stack)
+    fmt::print("Teil 2: Lokale Variable (Stack)\n");
+    int localVar = 2;
+    fmt::print("  localVar = {}\n", localVar);
+    fmt::print("  Adresse: {:p}\n\n", fmt::ptr(&localVar));
+
+    // Teil 3: Dynamisch allozierte Variable (Heap)
+    fmt::print("Teil 3: Dynamisch allozierte Variable (Heap)\n");
+    int* heapVar = new int(3);
+    fmt::print("  *heapVar = {}\n", *heapVar);
+    fmt::print("  Adresse: {:p}\n", fmt::ptr(heapVar));
+    delete heapVar;
+    fmt::print("  (Speicher wurde freigegeben)\n\n");
+
+    // Teil 4: Funktion (Code-Segment)
+    fmt::print("Teil 4: Funktion (Code-Segment)\n");
+    fmt::print("  Adresse von foo: {:p}\n", fmt::ptr(&foo));
+    foo();
+
+    fmt::print("\n=== Fazit ===\n");
+    fmt::print("- Globale Variablen werden im Data-Segment gespeichert\n");
+    fmt::print("- Lokale Variablen werden auf dem Stack angelegt\n");
+    fmt::print("- Dynamisch allozierte Variablen liegen im Heap\n");
+    fmt::print("- Funktionen befinden sich im Code-Segment\n");
+    fmt::print("\nWarum wichtig:\n");
+    fmt::print("- Stack ist schnell, aber begrenzt und wird automatisch freigegeben\n");
+    fmt::print("- Heap ist größer, muss aber manuell freigegeben werden\n");
+    fmt::print("- Zeiger ermöglichen flexible Verwaltung und Weitergabe von Adressen\n");
 
     return 0; /* exit gracefully*/
 }

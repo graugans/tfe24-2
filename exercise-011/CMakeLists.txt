@@ -17,6 +17,7 @@ find_package(Catch2 3 REQUIRED)
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.in" "${CMAKE_CURRENT_BINARY_DIR}/include/config.h" @ONLY)
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/include") # add the output path to the include PATH
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include") # add the local include directory
 
 # add the executable
 add_executable(${PROJECT_NAME} main.cpp)
@@ -26,3 +27,13 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
                                         fmt::fmt
                                         CLI11::CLI11
                                         nlohmann_json::nlohmann_json)
+
+# Add test executable
+add_executable(test_myvector_json tests/test_myvector_json.cpp)
+target_include_directories(test_myvector_json PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR}/include)
+target_link_libraries(test_myvector_json PRIVATE
+                                          Catch2::Catch2WithMain
+                                          nlohmann_json::nlohmann_json)
+
+# Register test
+add_test(NAME myvector_json_tests COMMAND test_myvector_json WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
